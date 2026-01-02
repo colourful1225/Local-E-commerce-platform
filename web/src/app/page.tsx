@@ -3,24 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-
-const featured = [
-  {
-    name: "iPhone 15 Pro",
-    price: "¥7,999",
-    tagline: "A17 Pro · 钛金属机身",
-  },
-  {
-    name: "MacBook Pro 14",
-    price: "¥14,999",
-    tagline: "M3 Pro · Liquid Retina XDR",
-  },
-  {
-    name: "AirPods Pro 2",
-    price: "¥1,899",
-    tagline: "自适应降噪 · 空间音频",
-  },
-];
+import { prisma } from "@/lib/db";
+import { formatCurrency } from "@/lib/utils";
 
 const highlights = [
   {
@@ -37,7 +21,19 @@ const highlights = [
   },
 ];
 
-export default function Home() {
+async function getFeaturedProducts() {
+  return prisma.product.findMany({
+    orderBy: [
+      { featured: "desc" },
+      { createdAt: "desc" },
+    ],
+    take: 3,
+  });
+}
+
+export default async function Home() {
+  const featured = await getFeaturedProducts();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-900">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 py-16 lg:py-20">
@@ -94,18 +90,18 @@ export default function Home() {
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {featured.map((product) => (
-              <Card key={product.name} className="h-full border-slate-200">
+              <Card key={product.id} className="h-full border-slate-200">
                 <CardHeader>
-                  <Badge className="w-fit" variant="secondary">
-                    热门
+                  <Badge className="w-fit" variant={product.featured ? "secondary" : "outline"}>
+                    {product.featured ? "精选" : "上新"}
                   </Badge>
                   <CardTitle className="text-xl">{product.name}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2 text-slate-600">
-                  <p className="text-lg font-semibold text-slate-900">{product.price}</p>
-                  <p className="text-sm">{product.tagline}</p>
-                  <Button className="w-full" variant="outline">
-                    加入购物车
+                  <p className="text-lg font-semibold text-slate-900">{formatCurrency(product.price)}</p>
+                  <p className="text-sm line-clamp-2">{product.description}</p>
+                  <Button className="w-full" asChild>
+                    <Link href={`/products/${product.id}`}>查看详情</Link>
                   </Button>
                 </CardContent>
               </Card>
