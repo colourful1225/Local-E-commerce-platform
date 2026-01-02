@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { Button } from "@/components/ui/button";
 import { AuthProvider } from "@/components/providers/auth-provider";
+import { NavAuthActions } from "@/components/nav-auth-actions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,12 +49,7 @@ export default function RootLayout({
                     管理端
                   </Link>
                 </nav>
-                <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm">
-                    登录
-                  </Button>
-                  <Button size="sm">注册</Button>
-                </div>
+                <NavAuthActions />
               </div>
             </header>
 
