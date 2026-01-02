@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { Button } from "@/components/ui/button";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +30,41 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
+          <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
+            <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6">
+              <Link href="/" className="text-lg font-semibold">
+                Local E-commerce
+              </Link>
+              <nav className="flex items-center gap-3 text-sm font-medium text-slate-600">
+                <Link href="/products" className="hover:text-slate-900">
+                  商品
+                </Link>
+                <Link href="/cart" className="hover:text-slate-900">
+                  购物车
+                </Link>
+                <Link href="/admin" className="hover:text-slate-900">
+                  管理端
+                </Link>
+              </nav>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm">
+                  登录
+                </Button>
+                <Button size="sm">注册</Button>
+              </div>
+            </div>
+          </header>
+
+          <main className="flex-1">{children}</main>
+
+          <footer className="border-t border-slate-200 bg-white">
+            <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 text-sm text-slate-500 sm:px-6">
+              <span>本地电商模板 · Next.js + Shadcn/UI</span>
+              <span>© 2026</span>
+            </div>
+          </footer>
+        </div>
         <Toaster richColors />
       </body>
     </html>
