@@ -20,6 +20,7 @@ async function main() {
       password: adminPassword,
       name: "管理员",
       role: "admin",
+      active: true,
     },
   });
   console.log("✅ Created admin:", admin.email);
@@ -31,6 +32,7 @@ async function main() {
       password: userPassword,
       name: "张三",
       role: "user",
+      active: true,
     },
   });
   console.log("✅ Created user:", user.email);

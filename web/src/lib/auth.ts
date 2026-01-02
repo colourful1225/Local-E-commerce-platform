@@ -26,6 +26,10 @@ export const authOptions: NextAuthOptions = {
           throw new Error("用户不存在");
         }
 
+        if (!user.active) {
+          throw new Error("账号已被禁用，请联系管理员");
+        }
+
         const isValid = await bcrypt.compare(credentials.password, user.password);
 
         if (!isValid) {
