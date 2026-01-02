@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { prisma } from "@/lib/db";
 import { formatCurrency, parseImageUrls } from "@/lib/utils";
 
@@ -70,9 +71,12 @@ export default async function ProductsPage() {
                     ) : null}
                   </div>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" disabled>
-                      加入购物车
-                    </Button>
+                    <AddToCartButton
+                      productId={item.id}
+                      name={item.name}
+                      price={item.price}
+                      image={cover}
+                    />
                     <Button size="sm" asChild>
                       <Link href={`/products/${item.id}`}>查看详情</Link>
                     </Button>

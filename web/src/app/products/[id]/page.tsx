@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { prisma } from "@/lib/db";
 import { formatCurrency, parseImageUrls } from "@/lib/utils";
 
@@ -90,11 +91,15 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
               <p>下单后可在订单详情查看物流与状态。</p>
             </div>
             <div className="flex gap-2">
-              <Button className="flex-1" disabled>
-                加入购物车（待接入）
-              </Button>
+              <AddToCartButton
+                productId={product.id}
+                name={product.name}
+                price={product.price}
+                image={cover}
+                disabled={product.stock <= 0}
+              />
               <Button variant="outline" className="flex-1" disabled>
-                立即购买（待接入）
+                立即购买（开发中）
               </Button>
             </div>
             <div className="text-sm text-slate-500">
