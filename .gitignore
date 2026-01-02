@@ -1,1 +1,13 @@
 /fri_jan_02_2026_前端开发技术栈及案例分析.md
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+web/.env
+web/.env.local
+web/.env.development
+web/.env.production
+web/.env.test
+!web/.env.example
+web/node_modules
